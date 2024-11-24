@@ -24,6 +24,16 @@ app.get('/api/users', (req, res) => {
     res.status(200).send(users);
 });
 
+app.get('/api/users/:id', (req, res) => {
+    console.log(req.params)
+    const passedId = parseInt(req.params.id);
+    if (isNaN(passedId)) return res.status(400).send({ message: 'Invalid ID supplied' });
+
+    const findUser = users.find(user => user.id === passedId);
+    if (!findUser) return res.status(404).send({ message: 'User not found' });
+    res.status(200).send(findUser);
+});
+
 app.get('/api/products', (req, res) => {
     res.status(200).send(products);
 });
