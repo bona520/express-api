@@ -5,9 +5,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const users = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Den Smith' },
-    { id: 3, name: 'Jane Doe' },
+    { id: 1, name: 'matina' },
+    { id: 2, name: 'thim' },
+    { id: 3, name: 'nath' },
 ];
 
 const products = [
@@ -21,7 +21,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/users', (req, res) => {
-    res.status(200).send(users);
+    console.log(req.query)
+    const { query: { filter, value } } = req;
+    console.log(filter, value);
+    if (filter && value) return res.status(200).send(users.filter(user => user[filter].includes(value)));
+    return res.status(200).send(users);
 });
 
 app.get('/api/users/:id', (req, res) => {
